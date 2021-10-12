@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -13,84 +15,59 @@ class Facebook extends StatefulWidget {
 }
 
 class _FacebookState extends State<Facebook> {
-  int num = 0;
+  var _listOfQ = [
+    'how old are you ?',
+    'what is ur name ?',
+    'what is ur job ?',
+    'what is ur fav color ?'
+  ];
+  int _num1=0;
+  int _num = 0;
+  void randomNum(){
+
+    setState(() {
+      _num1=Random().nextInt(6)+1;
+
+    });  }
+  void list() {
+    setState(() {
+      _num = Random().nextInt(4);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.grey,
-            title: Text('Counter'),
-          ),
-          body: Column(
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.grey,
+          title: Text('my app'),
+        ),
+        body: Center(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Counter',
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            children:[
+              InkWell(
+                onTap: () {
+                  list();
+                },
+                child: Text(
+                  _listOfQ[_num].toString(),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
               ),
-              Text(
-                '$num',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 115),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            num++;
-                          });
-                        },
-                        style: ButtonStyle(
-                            backgroundColor:
-                            MaterialStateProperty.all(Colors.green)),
-                        child: Row(
-                          children: [Icon(Icons.add), Text('Add')],
-                        )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          num--;
-                        });
-                      },
-                      style: ButtonStyle(
-                          backgroundColor:
-                          MaterialStateProperty.all(Colors.deepOrangeAccent)),
-                      child: Row(
-                        children: [
-                          Icon(Icons.minimize),
-                          Text('Minus'),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      num = 0;
-                    });
+              SizedBox(height: 10,),
+              InkWell(
+                  onTap: (){
+                    randomNum();
                   },
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.red)),
-                  child: Container(
-                    width: 60,
-                    child: (Row(
-                      children: [
-                        Icon(Icons.undo_sharp),
-                        Text('Reset'),
-                      ],
-                    )),
-                  )),
+
+                  child: Text(_num1.toString(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),))
             ],
+
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

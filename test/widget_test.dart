@@ -1,30 +1,96 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-
-import 'package:untitled2/main.dart';
+import 'package:flutter/cupertino.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  runApp(Facebook());
+}
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+class Facebook extends StatefulWidget {
+  const Facebook({Key? key}) : super(key: key);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  @override
+  _FacebookState createState() => _FacebookState();
+}
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+class _FacebookState extends State<Facebook> {
+  int num = 0;
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.grey,
+            title: Text('Counter'),
+          ),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Counter',
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                '$num',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 115),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            num++;
+                          });
+                        },
+                        style: ButtonStyle(
+                            backgroundColor:
+                            MaterialStateProperty.all(Colors.green)),
+                        child: Row(
+                          children: [Icon(Icons.add), Text('Add')],
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          num--;
+                        });
+                      },
+                      style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.all(Colors.deepOrangeAccent)),
+                      child: Row(
+                        children: [
+                          Icon(Icons.minimize),
+                          Text('Minus'),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      num = 0;
+                    });
+                  },
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red)),
+                  child: Container(
+                    width: 60,
+                    child: (Row(
+                      children: [
+                        Icon(Icons.undo_sharp),
+                        Text('Reset'),
+                      ],
+                    )),
+                  )),
+            ],
+          ),
+        ));
+  }
 }
